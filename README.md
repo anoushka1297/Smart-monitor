@@ -188,6 +188,6 @@ The system keeps a rolling window of past readings and checks two conditions on 
 
 This project was primarily an exercise in understanding how each layer of a networked embedded system fits together: from radio-level WiFi and the TCP/IP stack, through HTTP and Flask's request/response model, to sensor communication protocols (DHT22's single-wire timing-based protocol vs PIR's simple digital output), database design, rule-based anomaly detection with noise tolerance, and integrating third-party APIs (Gemini, Telegram). 
 
-The LLM integration (anomaly classification via Gemini API) was not strictly necessary for this project— since only two anomaly types exist (high temperature, motion detected), a simple if/else condition would have sufficed. It was included for learning purposes, to explore how language models can be embedded into IoT pipelines for natural language reasoning over sensor data.
+The LLM integration (anomaly classification via Gemini API) was not strictly necessary for this project— since only two anomaly types exist (thermal runaway/fire risk and humidity/mould risk), a simple if/else condition would have sufficed. It was included for learning purposes, to explore how language models can be embedded into IoT pipelines for natural language reasoning over sensor data.
 
 
