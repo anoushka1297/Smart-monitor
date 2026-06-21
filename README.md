@@ -106,7 +106,7 @@ git clone <repo-url>
 cd smart-monitor
 python -m venv venv
 source venv/bin/activate
-pip install flask requests python-dotenv
+pip install -r requirements.txt
 ```
 
 Create a `.env` file in the project root:
@@ -127,15 +127,45 @@ The server listens on `0.0.0.0:5000`.
 
 ### Firmware
 
-1. Open `firmware/smart_monitor.ino` in the Arduino IDE
+1. Open `esp32_code.ino` in the Arduino IDE
 2. Install the ESP32 board package and the following libraries: `DHT sensor library` (Adafruit), `Adafruit Unified Sensor`, `ArduinoJson`
-3. Update `WIFI_SSID`, `WIFI_PASSWORD`, and `SERVER_URL` (your machine's local IP, ex. `http://192.168.1.x:5000/data`)
+3. Before uploading the code, fill in your credentials at the top of the file:
+ ```cpp
+#define WIFI_SSID "your_wifi_name"
+#define WIFI_PASSWORD "your_wifi_password"
+#define SERVER_URL "http://server-ip:5000/data"
+```
+The server-ip can be obtained by running:
+```bash
+# Mac/Linux
+ifconfig | grep "inet "
+
+# Windows
+ipconfig
+```
+
 4. Wire the DHT22 and PIR sensors to the ESP32 (see wiring diagram below)
 5. Flash to the ESP32 and open the Serial Monitor to confirm WiFi connection and successful POST responses
 
-### Wiring (to be done)
+### Wiring 
 
+### Schematic layout
+<img width="897" height="730" alt="Screenshot 2026-06-22 at 5 29 16 AM" src="https://github.com/user-attachments/assets/518af266-18ef-438f-8306-b177316e0411" />
 
+### Physical breaboard layout
+<img width="1600" height="1200" alt="WhatsApp Image 2026-06-22 at 04 48 24" src="https://github.com/user-attachments/assets/bf37cc45-0221-46bf-96bd-9928376a4364" />
+
+---
+## Images
+
+### Serial Monitor
+<img width="861" height="813" alt="Screenshot 2026-06-19 at 6 17 07 PM" src="https://github.com/user-attachments/assets/dba111d9-2aa7-4217-b250-a08138bb27af" />
+
+### Database Entries
+<img width="1149" height="314" alt="Screenshot 2026-06-19 at 6 20 30 PM" src="https://github.com/user-attachments/assets/e88c2bc4-c2e7-4759-a8e1-4d9c99da3276" />
+
+### Backend Server Logs
+<img width="1390" height="306" alt="Screenshot 2026-06-19 at 6 16 56 PM" src="https://github.com/user-attachments/assets/0266fa58-628f-4b38-afe1-cc2c683e2f27" />
 
 ---
 
@@ -156,4 +186,8 @@ The system keeps a rolling window of past readings and checks two conditions on 
 
 ## What I Learned
 
-This project was primarily an exercise in understanding how each layer of a networked embedded system fits together: from radio-level WiFi and the TCP/IP stack, through HTTP and Flask's request/response model, to sensor communication protocols (DHT22's single-wire timing-based protocol vs PIR's simple digital output), database design, rule-based anomaly detection with noise tolerance, and integrating third-party APIs (Gemini, Telegram).
+This project was primarily an exercise in understanding how each layer of a networked embedded system fits together: from radio-level WiFi and the TCP/IP stack, through HTTP and Flask's request/response model, to sensor communication protocols (DHT22's single-wire timing-based protocol vs PIR's simple digital output), database design, rule-based anomaly detection with noise tolerance, and integrating third-party APIs (Gemini, Telegram). 
+
+The LLM integration (anomaly classification via Gemini API) was not strictly necessary for this project— since only two anomaly types exist (high temperature, motion detected), a simple if/else condition would have sufficed. It was included for learning purposes, to explore how language models can be embedded into IoT pipelines for natural language reasoning over sensor data.
+
+
