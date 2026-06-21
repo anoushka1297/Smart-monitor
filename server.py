@@ -1,3 +1,4 @@
+
 #File to store and retrieve the entries from the server
 import sqlite3
 from flask import Flask, request, jsonify
@@ -25,7 +26,7 @@ def init_db():
     """)
     conn.commit()
     conn.close()
-
+init_db()
 def analyse_readings(data): #returns true if theres an anomaly (and the type) 
     conn=sqlite3.connect(DB)
     readings=conn.execute("""SELECT temperature, humidity, motion, timestamp 
@@ -123,6 +124,5 @@ def get_readings():
     return jsonify(rows), 200
 
 if __name__ == "__main__":
-    init_db()
     app.run(host="0.0.0.0", port=5000, debug=True)
 
