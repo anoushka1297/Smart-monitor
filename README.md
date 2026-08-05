@@ -167,6 +167,10 @@ ipconfig
 ### Backend Server Logs
 <img width="1390" height="306" alt="Screenshot 2026-06-19 at 6 16 56 PM" src="https://github.com/user-attachments/assets/0266fa58-628f-4b38-afe1-cc2c683e2f27" />
 
+### Telegram Alerts 
+
+<img width="786" height="755" alt="Screenshot 2026-08-05 at 11 18 39 PM" src="https://github.com/user-attachments/assets/65a6f38d-79d3-4575-bc4b-ac50c3d0b7e5" />
+
 ---
 
 ## Anomaly Detection Logic
